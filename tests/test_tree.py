@@ -88,7 +88,10 @@ def test_render_tree_win32():
     tree.add("egg")
 
     console = Console(
-        width=20, force_terminal=True, color_system="standard", legacy_windows=True
+        width=20,
+        force_terminal=True,
+        color_system="standard",
+        legacy_windows=True,
     )
     console.begin_capture()
     console.print(tree)

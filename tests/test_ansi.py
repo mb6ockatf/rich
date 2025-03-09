@@ -24,7 +24,9 @@ def test_decode():
     expected = [
         Text("Hello"),
         Text("foo", spans=[Span(0, 3, Style.parse("bold"))]),
-        Text("bar", spans=[Span(0, 3, Style.parse("link http://example.org"))]),
+        Text(
+            "bar", spans=[Span(0, 3, Style.parse("link http://example.org"))]
+        ),
         Text("red", spans=[Span(0, 3, Style.parse("#ff0000 on color(200)"))]),
         Text("red", spans=[Span(0, 3, Style.parse("color(200) on #ff0000"))]),
     ]

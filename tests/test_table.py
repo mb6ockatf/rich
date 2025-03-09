@@ -24,15 +24,21 @@ def render_tables():
     )
 
     table = Table(title="test table", caption="table caption", expand=False)
-    table.add_column("foo", footer=Text("total"), no_wrap=True, overflow="ellipsis")
+    table.add_column(
+        "foo", footer=Text("total"), no_wrap=True, overflow="ellipsis"
+    )
     table.add_column("bar", justify="center")
     table.add_column("baz", justify="right")
 
     table.add_row("Averlongwordgoeshere", "banana pancakes", None)
 
-    assert Measurement.get(console, console.options, table) == Measurement(41, 48)
+    assert Measurement.get(console, console.options, table) == Measurement(
+        41, 48
+    )
     table.expand = True
-    assert Measurement.get(console, console.options, table) == Measurement(41, 48)
+    assert Measurement.get(console, console.options, table) == Measurement(
+        41, 48
+    )
 
     for width in range(10, 60, 5):
         console.print(table, width=width)
@@ -66,9 +72,13 @@ def render_tables():
     console.print(table)
 
     table.width = 20
-    assert Measurement.get(console, console.options, table) == Measurement(20, 20)
+    assert Measurement.get(console, console.options, table) == Measurement(
+        20, 20
+    )
     table.expand = False
-    assert Measurement.get(console, console.options, table) == Measurement(20, 20)
+    assert Measurement.get(console, console.options, table) == Measurement(
+        20, 20
+    )
     table.expand = True
     console.print(table)
 
@@ -105,7 +115,8 @@ def test_not_renderable():
 def test_init_append_column():
     header_names = ["header1", "header2", "header3"]
     test_columns = [
-        Column(_index=index, header=header) for index, header in enumerate(header_names)
+        Column(_index=index, header=header)
+        for index, header in enumerate(header_names)
     ]
 
     # Test appending of strings for header names
@@ -186,15 +197,28 @@ def test_vertical_align_top():
     [
         (None, " 1  2 \n 3  4 \n"),
         (box.HEAVY_HEAD, "┌───┬───┐\n│ 1 │ 2 │\n│ 3 │ 4 │\n└───┴───┘\n"),
-        (box.SQUARE_DOUBLE_HEAD, "┌───┬───┐\n│ 1 │ 2 │\n│ 3 │ 4 │\n└───┴───┘\n"),
-        (box.MINIMAL_DOUBLE_HEAD, "    ╷    \n  1 │ 2  \n  3 │ 4  \n    ╵    \n"),
-        (box.MINIMAL_HEAVY_HEAD, "    ╷    \n  1 │ 2  \n  3 │ 4  \n    ╵    \n"),
-        (box.ASCII_DOUBLE_HEAD, "+---+---+\n| 1 | 2 |\n| 3 | 4 |\n+---+---+\n"),
+        (
+            box.SQUARE_DOUBLE_HEAD,
+            "┌───┬───┐\n│ 1 │ 2 │\n│ 3 │ 4 │\n└───┴───┘\n",
+        ),
+        (
+            box.MINIMAL_DOUBLE_HEAD,
+            "    ╷    \n  1 │ 2  \n  3 │ 4  \n    ╵    \n",
+        ),
+        (
+            box.MINIMAL_HEAVY_HEAD,
+            "    ╷    \n  1 │ 2  \n  3 │ 4  \n    ╵    \n",
+        ),
+        (
+            box.ASCII_DOUBLE_HEAD,
+            "+---+---+\n| 1 | 2 |\n| 3 | 4 |\n+---+---+\n",
+        ),
     ],
 )
 def test_table_show_header_false_substitution(box, result):
     """When the box style is one with a custom header edge, it should be substituted for
-    the equivalent box that does not have a custom header when show_header=False"""
+    the equivalent box that does not have a custom header when show_header=False
+    """
     table = Table(show_header=False, box=box)
     table.add_column()
     table.add_column()
@@ -308,7 +332,10 @@ def test_placement_table_box_elements(show_header, show_footer, expected):
     """Ensure box drawing characters correctly positioned."""
 
     table = Table(
-        box=box.ASCII, show_header=show_header, show_footer=show_footer, padding=0
+        box=box.ASCII,
+        show_header=show_header,
+        show_footer=show_footer,
+        padding=0,
     )
 
     # content rows indicated by numerals, pure dividers by letters
@@ -376,9 +403,7 @@ def test_columns_highlight_added_by_add_row() -> None:
     output = console.export_text(styles=True)
     print(repr(output))
 
-    expected = (
-        "┌───┬───────┐\n│ \x1b[1;36m1\x1b[0m │ \x1b[32m'FOO'\x1b[0m │\n└───┴───────┘\n"
-    )
+    expected = "┌───┬───────┐\n│ \x1b[1;36m1\x1b[0m │ \x1b[32m'FOO'\x1b[0m │\n└───┴───────┘\n"
     assert output == expected
 
 

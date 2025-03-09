@@ -47,7 +47,11 @@ def loop_first_last(values: Iterable[T]) -> Iterable[Tuple[bool, bool, T]]:
 def test_blank_lines():
     code = "\n\nimport this\n\n"
     syntax = Syntax(
-        code, lexer="python", theme="ascii_light", code_width=30, line_numbers=True
+        code,
+        lexer="python",
+        theme="ascii_light",
+        code_width=30,
+        line_numbers=True,
     )
     result = render(syntax)
     print(repr(result))
@@ -372,7 +376,10 @@ def test_syntax_guess_lexer():
     assert Syntax.guess_lexer("banana.py", "import this") == "python"
     assert Syntax.guess_lexer("banana.html", "<a href='#'>hello</a>") == "html"
     assert Syntax.guess_lexer("banana.html", "<%= @foo %>") == "rhtml"
-    assert Syntax.guess_lexer("banana.html", "{{something|filter:3}}") == "html+django"
+    assert (
+        Syntax.guess_lexer("banana.html", "{{something|filter:3}}")
+        == "html+django"
+    )
 
 
 def test_syntax_padding():
@@ -387,23 +394,32 @@ def test_syntax_padding():
     console.print(syntax)
     output = console.export_text()
     assert (
-        output == "                    \n   x = 1            \n                    \n"
+        output
+        == "                    \n   x = 1            \n                    \n"
     )
 
 
 def test_syntax_measure():
     console = Console()
     code = Syntax("Hello, World", "python")
-    assert code.__rich_measure__(console, console.options) == Measurement(0, 12)
+    assert code.__rich_measure__(console, console.options) == Measurement(
+        0, 12
+    )
 
     code = Syntax("Hello, World", "python", line_numbers=True)
-    assert code.__rich_measure__(console, console.options) == Measurement(3, 16)
+    assert code.__rich_measure__(console, console.options) == Measurement(
+        3, 16
+    )
 
     code = Syntax("Hello, World", "python", code_width=20, line_numbers=True)
-    assert code.__rich_measure__(console, console.options) == Measurement(3, 24)
+    assert code.__rich_measure__(console, console.options) == Measurement(
+        3, 24
+    )
 
     code = Syntax("", "python", code_width=20, line_numbers=True)
-    assert code.__rich_measure__(console, console.options) == Measurement(3, 24)
+    assert code.__rich_measure__(console, console.options) == Measurement(
+        3, 24
+    )
 
 
 def test_background_color_override_includes_padding():

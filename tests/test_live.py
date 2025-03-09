@@ -86,7 +86,9 @@ def test_growing_display_overflow_ellipsis() -> None:
 def test_growing_display_overflow_crop() -> None:
     console = create_capture_console(height=5)
     console.begin_capture()
-    with Live(console=console, auto_refresh=False, vertical_overflow="crop") as live:
+    with Live(
+        console=console, auto_refresh=False, vertical_overflow="crop"
+    ) as live:
         display = ""
         for step in range(10):
             display += f"Step {step}\n"
@@ -101,7 +103,9 @@ def test_growing_display_overflow_crop() -> None:
 def test_growing_display_overflow_visible() -> None:
     console = create_capture_console(height=5)
     console.begin_capture()
-    with Live(console=console, auto_refresh=False, vertical_overflow="visible") as live:
+    with Live(
+        console=console, auto_refresh=False, vertical_overflow="visible"
+    ) as live:
         display = ""
         for step in range(10):
             display += f"Step {step}\n"
@@ -117,7 +121,9 @@ def test_growing_display_autorefresh() -> None:
     """Test generating a table but using auto-refresh from threading"""
     console = create_capture_console(height=5)
     console.begin_capture()
-    with Live(console=console, auto_refresh=True, vertical_overflow="visible") as live:
+    with Live(
+        console=console, auto_refresh=True, vertical_overflow="visible"
+    ) as live:
         display = ""
         for step in range(10):
             display += f"Step {step}\n"
@@ -161,7 +167,9 @@ def test_growing_display_file_console() -> None:
 def test_live_screen() -> None:
     console = create_capture_console(width=20, height=5)
     console.begin_capture()
-    with Live(Text("foo"), screen=True, console=console, auto_refresh=False) as live:
+    with Live(
+        Text("foo"), screen=True, console=console, auto_refresh=False
+    ) as live:
         live.refresh()
     result = console.end_capture()
     print(repr(result))

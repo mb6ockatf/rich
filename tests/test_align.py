@@ -101,12 +101,16 @@ def test_align_right_style():
         _environ={},
     )
     console.print(Align("foo", "right", style="on blue"))
-    assert console.file.getvalue() == "\x1b[44m       \x1b[0m\x1b[44mfoo\x1b[0m\n"
+    assert (
+        console.file.getvalue() == "\x1b[44m       \x1b[0m\x1b[44mfoo\x1b[0m\n"
+    )
 
 
 def test_measure():
     console = Console(file=io.StringIO(), width=20)
-    _min, _max = Measurement.get(console, console.options, Align("foo bar", "left"))
+    _min, _max = Measurement.get(
+        console, console.options, Align("foo bar", "left")
+    )
     assert _min == 3
     assert _max == 7
 
@@ -146,6 +150,6 @@ def test_vertical_center():
     print(repr(result))
     expected = "   \n   \nfoo\n   \n   \n   \n"
     assert result == expected
-    assert Measurement.get(console, console.options, vertical_center) == Measurement(
-        3, 3
-    )
+    assert Measurement.get(
+        console, console.options, vertical_center
+    ) == Measurement(3, 3)

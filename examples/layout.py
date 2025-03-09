@@ -42,7 +42,9 @@ class Clock:
     """Renders the time in the center of the screen."""
 
     def __rich__(self) -> Text:
-        return Text(datetime.now().ctime(), style="bold magenta", justify="center")
+        return Text(
+            datetime.now().ctime(), style="bold magenta", justify="center"
+        )
 
 
 layout["header"].update(Clock())

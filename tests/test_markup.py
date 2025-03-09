@@ -60,7 +60,10 @@ def test_render_escape():
     console = Console(width=80, color_system=None)
     console.begin_capture()
     console.print(
-        escape(r"[red]"), escape(r"\[red]"), escape(r"\\[red]"), escape(r"\\\[red]")
+        escape(r"[red]"),
+        escape(r"\[red]"),
+        escape(r"\\[red]"),
+        escape(r"\\\[red]"),
     )
     result = console.end_capture()
     expected = r"[red] \[red] \\[red] \\\[red]" + "\n"
@@ -100,7 +103,10 @@ def test_render():
 
 def test_render_not_tags():
     result = render('[[1], [1,2,3,4], ["hello"], [None], [False], [True]] []')
-    assert str(result) == '[[1], [1,2,3,4], ["hello"], [None], [False], [True]] []'
+    assert (
+        str(result)
+        == '[[1], [1,2,3,4], ["hello"], [None], [False], [True]] []'
+    )
     assert result.spans == []
 
 
@@ -186,7 +192,9 @@ def test_escape_escape():
 
 
 def test_events():
-    result = render("[@click]Hello[/@click] [@click='view.toggle', 'left']World[/]")
+    result = render(
+        "[@click]Hello[/@click] [@click='view.toggle', 'left']World[/]"
+    )
     assert str(result) == "Hello World"
 
 
@@ -201,10 +209,14 @@ def test_events_broken():
 def test_render_meta():
     console = Console()
     text = render("foo[@click=close]bar[/]baz")
-    assert text.get_style_at_offset(console, 3).meta == {"@click": ("close", ())}
+    assert text.get_style_at_offset(console, 3).meta == {
+        "@click": ("close", ())
+    }
 
     text = render("foo[@click=close()]bar[/]baz")
-    assert text.get_style_at_offset(console, 3).meta == {"@click": ("close", ())}
+    assert text.get_style_at_offset(console, 3).meta == {
+        "@click": ("close", ())
+    }
 
     text = render("foo[@click=close('dialog')]bar[/]baz")
     assert text.get_style_at_offset(console, 3).meta == {

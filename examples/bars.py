@@ -3,6 +3,7 @@
 Use Bar to renderer a sort-of circle.
 
 """
+
 import math
 
 from rich.align import Align

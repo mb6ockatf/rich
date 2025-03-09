@@ -8,11 +8,17 @@ from rich.style import Style, StyleStack
 def test_str():
     assert str(Style(bold=False)) == "not bold"
     assert str(Style(color="red", bold=False)) == "not bold red"
-    assert str(Style(color="red", bold=False, italic=True)) == "not bold italic red"
+    assert (
+        str(Style(color="red", bold=False, italic=True))
+        == "not bold italic red"
+    )
     assert str(Style()) == "none"
     assert str(Style(bold=True)) == "bold"
     assert str(Style(color="red", bold=True)) == "bold red"
-    assert str(Style(color="red", bgcolor="black", bold=True)) == "bold red on black"
+    assert (
+        str(Style(color="red", bgcolor="black", bold=True))
+        == "bold red on black"
+    )
     all_styles = Style(
         color="red",
         bgcolor="black",
@@ -86,11 +92,15 @@ def test_bool():
 
 
 def test_color_property():
-    assert Style(color="red").color == Color("red", ColorType.STANDARD, 1, None)
+    assert Style(color="red").color == Color(
+        "red", ColorType.STANDARD, 1, None
+    )
 
 
 def test_bgcolor_property():
-    assert Style(bgcolor="black").bgcolor == Color("black", ColorType.STANDARD, 0, None)
+    assert Style(bgcolor="black").bgcolor == Color(
+        "black", ColorType.STANDARD, 0, None
+    )
 
 
 def test_parse():
@@ -194,9 +204,9 @@ def test_pick_first():
 
 
 def test_background_style():
-    assert Style(bold=True, color="yellow", bgcolor="red").background_style == Style(
-        bgcolor="red"
-    )
+    assert Style(
+        bold=True, color="yellow", bgcolor="red"
+    ).background_style == Style(bgcolor="red")
 
 
 def test_without_color():
@@ -232,9 +242,9 @@ def test_on():
 
 
 def test_clear_meta_and_links():
-    style = Style.parse("bold red on black link https://example.org") + Style.on(
-        click="CLICK"
-    )
+    style = Style.parse(
+        "bold red on black link https://example.org"
+    ) + Style.on(click="CLICK")
 
     assert style.meta == {"@click": "CLICK"}
     assert style.link == "https://example.org"
@@ -256,9 +266,9 @@ def test_clear_meta_and_links():
 def test_clear_meta_and_links_clears_hash():
     """Regression test for https://github.com/Textualize/rich/issues/2942."""
 
-    style = Style.parse("bold red on black link https://example.org") + Style.on(
-        click="CLICK"
-    )
+    style = Style.parse(
+        "bold red on black link https://example.org"
+    ) + Style.on(click="CLICK")
     hash(style)  # Force hash caching.
 
     assert style._hash is not None

@@ -1,4 +1,5 @@
 """Tests for the highlighter classes."""
+
 import json
 from typing import List
 
@@ -58,7 +59,10 @@ highlight_tests = [
             Span(11, 15, "repr.none"),
         ],
     ),
-    ("foo=bar", [Span(0, 3, "repr.attrib_name"), Span(4, 7, "repr.attrib_value")]),
+    (
+        "foo=bar",
+        [Span(0, 3, "repr.attrib_name"), Span(4, 7, "repr.attrib_value")],
+    ),
     (
         'foo="bar"',
         [
@@ -119,7 +123,10 @@ highlight_tests = [
         ],
     ),
     (" /foo ", [Span(1, 2, "repr.path"), Span(2, 5, "repr.filename")]),
-    (" /foo/bar.html ", [Span(1, 6, "repr.path"), Span(6, 14, "repr.filename")]),
+    (
+        " /foo/bar.html ",
+        [Span(1, 6, "repr.path"), Span(6, 14, "repr.filename")],
+    ),
     ("01-23-45-67-89-AB", [Span(0, 17, "repr.eui48")]),  # 6x2 hyphen
     ("01-23-45-FF-FE-67-89-AB", [Span(0, 23, "repr.eui64")]),  # 8x2 hyphen
     ("01:23:45:67:89:AB", [Span(0, 17, "repr.ipv6")]),  # 6x2 colon

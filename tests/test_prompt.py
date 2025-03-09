@@ -64,7 +64,9 @@ def test_prompt_int():
         stream=io.StringIO(INPUT),
     )
     assert number == 100
-    expected = "Enter a number: Please enter a valid integer number\nEnter a number: "
+    expected = (
+        "Enter a number: Please enter a valid integer number\nEnter a number: "
+    )
     output = console.file.getvalue()
     print(repr(output))
     assert output == expected

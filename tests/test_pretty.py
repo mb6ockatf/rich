@@ -11,7 +11,14 @@ import pytest
 
 from rich.console import Console
 from rich.measure import Measurement
-from rich.pretty import Node, Pretty, _ipy_display_hook, install, pprint, pretty_repr
+from rich.pretty import (
+    Node,
+    Pretty,
+    _ipy_display_hook,
+    install,
+    pprint,
+    pretty_repr,
+)
 from rich.text import Text
 
 skip_py38 = pytest.mark.skipif(
@@ -184,7 +191,10 @@ def test_pretty_dataclass() -> None:
     dc.bar = dc
     result = pretty_repr(dc, max_width=80)
     print(repr(result))
-    assert result == "ExampleDataclass(foo=1000, bar=..., baz=['foo', 'bar', 'baz'])"
+    assert (
+        result
+        == "ExampleDataclass(foo=1000, bar=..., baz=['foo', 'bar', 'baz'])"
+    )
 
 
 def test_empty_dataclass() -> None:
@@ -337,7 +347,9 @@ def test_reference_cycle_namedtuple() -> None:
     a = Example(2, None)
     test = Example(1, [a, a])
     res = pretty_repr(test)
-    assert res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    assert (
+        res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    )
 
 
 def test_reference_cycle_dataclass() -> None:
@@ -360,7 +372,9 @@ def test_reference_cycle_dataclass() -> None:
     a = Example(2, None)
     test = Example(1, [a, a])
     res = pretty_repr(test)
-    assert res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    assert (
+        res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    )
 
 
 def test_reference_cycle_attrs() -> None:
@@ -383,7 +397,9 @@ def test_reference_cycle_attrs() -> None:
     a = Example(2, None)
     test = Example(1, [a, a])
     res = pretty_repr(test)
-    assert res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    assert (
+        res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    )
 
 
 def test_reference_cycle_custom_repr() -> None:
@@ -410,7 +426,9 @@ def test_reference_cycle_custom_repr() -> None:
     a = Example(2, None)
     test = Example(1, [a, a])
     res = pretty_repr(test)
-    assert res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    assert (
+        res == "Example(x=1, y=[Example(x=2, y=None), Example(x=2, y=None)])"
+    )
 
 
 def test_max_depth() -> None:
@@ -420,7 +438,10 @@ def test_max_depth() -> None:
     assert pretty_repr(d, max_depth=0) == "{...}"
     assert pretty_repr(d, max_depth=1) == "{'foo': {...}}"
     assert pretty_repr(d, max_depth=2) == "{'foo': {'fob': {...}}}"
-    assert pretty_repr(d, max_depth=3) == "{'foo': {'fob': {'a': [...], 'b': {...}}}}"
+    assert (
+        pretty_repr(d, max_depth=3)
+        == "{'foo': {'fob': {'a': [...], 'b': {...}}}}"
+    )
     assert (
         pretty_repr(d, max_width=100, max_depth=4)
         == "{'foo': {'fob': {'a': [1, 2, 3], 'b': {'z': 'x', 'y': [...]}}}}"
@@ -666,7 +687,9 @@ def test_attrs_broken_310() -> None:
     if sys.version_info >= (3, 13):
         expected = "Foo(\n    bar=AttributeError(\"'tests.test_pretty.test_attrs_broken_310.<locals>.Foo' object has no attribute 'bar'\")\n)"
     else:
-        expected = "Foo(bar=AttributeError(\"'Foo' object has no attribute 'bar'\"))"
+        expected = (
+            "Foo(bar=AttributeError(\"'Foo' object has no attribute 'bar'\"))"
+        )
     assert result == expected
 
 

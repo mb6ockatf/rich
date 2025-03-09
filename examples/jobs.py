@@ -20,7 +20,9 @@ with progress:
     for job_no, job in enumerate(JOBS):
         progress.log(f"Starting job #{job_no}")
         sleep(0.2)
-        progress.reset(jobs_task, total=job, description=f"job [bold yellow]#{job_no}")
+        progress.reset(
+            jobs_task, total=job, description=f"job [bold yellow]#{job_no}"
+        )
         progress.start_task(jobs_task)
         for wait in progress.track(range(job), task_id=jobs_task):
             sleep(0.01)

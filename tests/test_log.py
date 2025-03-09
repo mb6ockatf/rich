@@ -32,7 +32,9 @@ def render_log():
     console.log()
     console.log("Hello from", console, "!")
     console.log(test_data, log_locals=True)
-    return replace_link_ids(console.file.getvalue()).replace("test_log.py", "source.py")
+    return replace_link_ids(console.file.getvalue()).replace(
+        "test_log.py", "source.py"
+    )
 
 
 def test_log():
@@ -52,7 +54,9 @@ def test_log_caller_frame_info():
 
 
 def test_justify():
-    console = Console(width=20, log_path=False, log_time=False, color_system=None)
+    console = Console(
+        width=20, log_path=False, log_time=False, color_system=None
+    )
     console.begin_capture()
     console.log("foo", justify="right")
     result = console.end_capture()

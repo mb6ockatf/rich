@@ -71,7 +71,9 @@ def test_control_home(legacy_term_mock):
 
     legacy_windows_render(buffer, legacy_term_mock)
 
-    legacy_term_mock.move_cursor_to.assert_called_once_with(WindowsCoordinates(0, 0))
+    legacy_term_mock.move_cursor_to.assert_called_once_with(
+        WindowsCoordinates(0, 0)
+    )
 
 
 @pytest.mark.parametrize(
@@ -134,7 +136,9 @@ def test_control_cursor_move_to_column(legacy_term_mock):
 
 
 def test_control_set_terminal_window_title(legacy_term_mock):
-    buffer = [Segment("", None, [(ControlType.SET_WINDOW_TITLE, "Hello, world!")])]
+    buffer = [
+        Segment("", None, [(ControlType.SET_WINDOW_TITLE, "Hello, world!")])
+    ]
 
     legacy_windows_render(buffer, legacy_term_mock)
 

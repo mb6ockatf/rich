@@ -88,7 +88,10 @@ def replace_link_ids(render: str) -> str:
 
 def render(renderable: RenderableType) -> str:
     console = Console(
-        width=100, file=io.StringIO(), color_system="truecolor", legacy_windows=False
+        width=100,
+        file=io.StringIO(),
+        color_system="truecolor",
+        legacy_windows=False,
     )
     console.print(renderable)
     output = replace_link_ids(console.file.getvalue())

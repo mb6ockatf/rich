@@ -160,7 +160,8 @@ def test_inspect_builtin_function_except_python311():
 
 
 @pytest.mark.skipif(
-    sys.version_info < (3, 11), reason="print builtin signature only available on 3.11+"
+    sys.version_info < (3, 11),
+    reason="print builtin signature only available on 3.11+",
 )
 @skip_pypy3
 def test_inspect_builtin_function_only_python311():
@@ -464,7 +465,9 @@ def test_object_types_mro(obj: object, expected_result: Sequence[Type]):
         # fmt: on
     ),
 )
-def test_object_types_mro_as_strings(obj: object, expected_result: Sequence[str]):
+def test_object_types_mro_as_strings(
+    obj: object, expected_result: Sequence[str]
+):
     assert get_object_types_mro_as_strings(obj) == expected_result
 
 

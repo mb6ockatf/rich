@@ -91,11 +91,16 @@ overall_task_id = overall_progress.add_task("", total=len(apps))
 with Live(progress_group):
     for idx, (name, step_times) in enumerate(apps):
         # update message on overall progress bar
-        top_descr = "[bold #AAAAAA](%d out of %d apps installed)" % (idx, len(apps))
+        top_descr = "[bold #AAAAAA](%d out of %d apps installed)" % (
+            idx,
+            len(apps),
+        )
         overall_progress.update(overall_task_id, description=top_descr)
 
         # add progress bar for steps of this app, and run the steps
-        current_task_id = current_app_progress.add_task("Installing app %s" % name)
+        current_task_id = current_app_progress.add_task(
+            "Installing app %s" % name
+        )
         app_steps_task_id = app_steps_progress.add_task(
             "", total=len(step_times), name=name
         )
@@ -113,5 +118,6 @@ with Live(progress_group):
 
     # final update for message on overall progress bar
     overall_progress.update(
-        overall_task_id, description="[bold green]%s apps installed, done!" % len(apps)
+        overall_task_id,
+        description="[bold green]%s apps installed, done!" % len(apps),
     )

@@ -193,7 +193,9 @@ def make_progress() -> Progress:
         legacy_windows=False,
         _environ={},
     )
-    progress = Progress(console=console, get_time=fake_time, auto_refresh=False)
+    progress = Progress(
+        console=console, get_time=fake_time, auto_refresh=False
+    )
     task1 = progress.add_task("foo")
     task2 = progress.add_task("bar", total=30)
     progress.advance(task2, 16)
@@ -289,7 +291,11 @@ def test_track() -> None:
     test = ["foo", "bar", "baz"]
     expected_values = iter(test)
     for value in track(
-        test, "test", console=console, auto_refresh=False, get_time=MockClock(auto=True)
+        test,
+        "test",
+        console=console,
+        auto_refresh=False,
+        get_time=MockClock(auto=True),
     ):
         assert value == next(expected_values)
     result = console.file.getvalue()

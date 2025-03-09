@@ -48,7 +48,8 @@ def make_sponsor_message() -> Panel:
         "[u blue link=https://twitter.com/willmcgugan]https://twitter.com/willmcgugan",
     )
     sponsor_message.add_row(
-        "Textualize", "[u blue link=https://www.textualize.io]https://www.textualize.io"
+        "Textualize",
+        "[u blue link=https://www.textualize.io]https://www.textualize.io",
     )
 
     message = Table.grid(padding=1)

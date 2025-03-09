@@ -31,12 +31,17 @@ def test_apply_style():
 
 def test_split_lines():
     lines = [Segment("Hello\nWorld")]
-    assert list(Segment.split_lines(lines)) == [[Segment("Hello")], [Segment("World")]]
+    assert list(Segment.split_lines(lines)) == [
+        [Segment("Hello")],
+        [Segment("World")],
+    ]
 
 
 def test_split_and_crop_lines():
     assert list(
-        Segment.split_and_crop_lines([Segment("Hello\nWorld!\n"), Segment("foo")], 4)
+        Segment.split_and_crop_lines(
+            [Segment("Hello\nWorld!\n"), Segment("foo")], 4
+        )
     ) == [
         [Segment("Hell"), Segment("\n", None)],
         [Segment("Worl"), Segment("\n", None)],
@@ -52,7 +57,10 @@ def test_adjust_line_length():
     ]
 
     line = [Segment("H"), Segment("ello, World!")]
-    assert Segment.adjust_line_length(line, 5) == [Segment("H"), Segment("ello")]
+    assert Segment.adjust_line_length(line, 5) == [
+        Segment("H"),
+        Segment("ello"),
+    ]
 
     line = [Segment("Hello")]
     assert Segment.adjust_line_length(line, 5) == line
@@ -64,7 +72,10 @@ def test_get_line_length():
 
 def test_get_shape():
     assert Segment.get_shape([[Segment("Hello")]]) == (5, 1)
-    assert Segment.get_shape([[Segment("Hello")], [Segment("World!")]]) == (6, 2)
+    assert Segment.get_shape([[Segment("Hello")], [Segment("World!")]]) == (
+        6,
+        2,
+    )
 
 
 def test_set_shape():
@@ -83,7 +94,11 @@ def test_simplify():
     ) == [Segment("Hello World!")]
     assert list(
         Segment.simplify(
-            [Segment("Hello", "red"), Segment(" ", "red"), Segment("World!", "blue")]
+            [
+                Segment("Hello", "red"),
+                Segment(" ", "red"),
+                Segment("World!", "blue"),
+            ]
         )
     ) == [Segment("Hello ", "red"), Segment("World!", "blue")]
     assert list(Segment.simplify([])) == []
@@ -104,8 +119,12 @@ def test_strip_styles():
 
 
 def test_strip_links():
-    segments = [Segment("foo", Style(bold=True, link="https://www.example.org"))]
-    assert list(Segment.strip_links(segments)) == [Segment("foo", Style(bold=True))]
+    segments = [
+        Segment("foo", Style(bold=True, link="https://www.example.org"))
+    ]
+    assert list(Segment.strip_links(segments)) == [
+        Segment("foo", Style(bold=True))
+    ]
 
 
 def test_remove_color():
@@ -122,7 +141,10 @@ def test_remove_color():
 def test_is_control():
     assert Segment("foo", Style(bold=True)).is_control == False
     assert Segment("foo", Style(bold=True), []).is_control == True
-    assert Segment("foo", Style(bold=True), [(ControlType.HOME, 0)]).is_control == True
+    assert (
+        Segment("foo", Style(bold=True), [(ControlType.HOME, 0)]).is_control
+        == True
+    )
 
 
 def test_segments_renderable():
@@ -184,7 +206,10 @@ def test_divide_complex():
 
     text = Text.from_markup(MAP)
     console = Console(
-        color_system="truecolor", width=30, force_terminal=True, file=StringIO()
+        color_system="truecolor",
+        width=30,
+        force_terminal=True,
+        file=StringIO(),
     )
     console.print(text)
     result = console.file.getvalue()
@@ -290,7 +315,9 @@ def test_split_cells_emoji(text, split, result):
     [
         Segment("早乙女リリエル (CV: 徳井青）"),
         Segment("メイド・イン・きゅんクチュアリ☆    "),
-        Segment("TVアニメ「メルクストーリア -無気力少年と瓶の中の少女-」 主題歌CD"),
+        Segment(
+            "TVアニメ「メルクストーリア -無気力少年と瓶の中の少女-」 主題歌CD"
+        ),
         Segment("南無阿弥JKうらめしや?！     "),
         Segment("メルク (CV: 水瀬いのり)     "),
         Segment(" メルク (CV: 水瀬いのり)     "),
@@ -330,7 +357,10 @@ def test_split_cells_single() -> None:
 
 
 def test_segment_lines_renderable():
-    lines = [[Segment("hello"), Segment(" "), Segment("world")], [Segment("foo")]]
+    lines = [
+        [Segment("hello"), Segment(" "), Segment("world")],
+        [Segment("foo")],
+    ]
     segment_lines = SegmentLines(lines)
     assert list(segment_lines.__rich_console__(None, None)) == [
         Segment("hello"),

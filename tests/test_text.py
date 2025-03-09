@@ -20,7 +20,10 @@ def test_span():
 def test_span_split():
     assert Span(5, 10, "foo").split(2) == (Span(5, 10, "foo"), None)
     assert Span(5, 10, "foo").split(15) == (Span(5, 10, "foo"), None)
-    assert Span(0, 10, "foo").split(5) == (Span(0, 5, "foo"), Span(5, 10, "foo"))
+    assert Span(0, 10, "foo").split(5) == (
+        Span(0, 5, "foo"),
+        Span(5, 10, "foo"),
+    )
 
 
 def test_span_move():
@@ -318,7 +321,9 @@ def test_console_width():
     text = Text("Hello World!\nfoobarbaz")
     assert text.__rich_measure__(console, 80) == Measurement(9, 12)
     assert Text(" " * 4).__rich_measure__(console, 80) == Measurement(4, 4)
-    assert Text(" \n  \n   ").__rich_measure__(console, 80) == Measurement(3, 3)
+    assert Text(" \n  \n   ").__rich_measure__(console, 80) == Measurement(
+        3, 3
+    )
 
 
 def test_join():
@@ -329,7 +334,11 @@ def test_join():
 
 def test_trim_spans():
     text = Text("Hello")
-    text._spans[:] = [Span(0, 3, "red"), Span(3, 6, "green"), Span(6, 9, "blue")]
+    text._spans[:] = [
+        Span(0, 3, "red"),
+        Span(3, 6, "green"),
+        Span(6, 9, "blue"),
+    ]
     text._trim_spans()
     assert text._spans == [Span(0, 3, "red"), Span(3, 5, "green")]
 
@@ -507,7 +516,9 @@ def test_wrap_cjk_mixed():
     https://github.com/Textualize/textual/issues/3567 - double width characters could
     result in text going missing when wrapping."""
     text = Text("123ありがとうございました")
-    console = Console(width=20)  # let's ensure the width passed to wrap() wins.
+    console = Console(
+        width=20
+    )  # let's ensure the width passed to wrap() wins.
 
     wrapped_lines = text.wrap(console, width=8)
     with console.capture() as capture:
@@ -594,7 +605,8 @@ def test_wrap_long_word_preceeded_by_word_of_full_line_length():
 
 def test_wrap_multiple_consecutive_spaces():
     """Adding multiple consecutive spaces at the end of a line does not impact
-    the location at which a break will be added during the process of wrapping."""
+    the location at which a break will be added during the process of wrapping.
+    """
     text = Text("123456    12345678 123 123")
     lines = text.wrap(Console(), 6)
     assert lines._lines == [
@@ -843,7 +855,10 @@ def test_assemble():
 def test_assemble_meta():
     text = Text.assemble("foo", ("bar", "bold"), meta={"foo": "bar"})
     assert str(text) == "foobar"
-    assert text._spans == [Span(3, 6, "bold"), Span(0, 6, Style(meta={"foo": "bar"}))]
+    assert text._spans == [
+        Span(3, 6, "bold"),
+        Span(0, 6, Style(meta={"foo": "bar"})),
+    ]
     console = Console()
     assert text.get_style_at_offset(console, 0).meta == {"foo": "bar"}
 
@@ -969,8 +984,12 @@ def test_slice():
 
     assert text[:3] == Text("foo", spans=[Span(0, 3, "red")])
     assert text[:4] == Text("foo ", spans=[Span(0, 4, "red")])
-    assert text[:5] == Text("foo b", spans=[Span(0, 5, "red"), Span(4, 5, "bold")])
-    assert text[4:] == Text("bar baz", spans=[Span(0, 3, "red"), Span(0, 7, "bold")])
+    assert text[:5] == Text(
+        "foo b", spans=[Span(0, 5, "red"), Span(4, 5, "bold")]
+    )
+    assert text[4:] == Text(
+        "bar baz", spans=[Span(0, 3, "red"), Span(0, 7, "bold")]
+    )
 
     with pytest.raises(TypeError):
         text[::-1]
@@ -1008,7 +1027,9 @@ def test_markup_property():
     assert Text("").markup == ""
     assert Text("foo").markup == "foo"
     assert Text("foo", style="bold").markup == "[bold]foo[/bold]"
-    assert Text.from_markup("foo [red]bar[/red]").markup == "foo [red]bar[/red]"
+    assert (
+        Text.from_markup("foo [red]bar[/red]").markup == "foo [red]bar[/red]"
+    )
     assert (
         Text.from_markup("foo [red]bar[/red]", style="bold").markup
         == "[bold]foo [red]bar[/red][/bold]"
@@ -1053,7 +1074,9 @@ def test_append_tokens() -> None:
 
     output = capture.get()
     print(repr(output))
-    assert output == "long text that will be wrapped with a \ncontrol code \n\n"
+    assert (
+        output == "long text that will be wrapped with a \ncontrol code \n\n"
+    )
 
 
 def test_append_loop_regression() -> None:

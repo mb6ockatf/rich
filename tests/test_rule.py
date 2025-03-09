@@ -21,7 +21,9 @@ def test_rule():
     console.rule("foobarbazeggfoobarbazegg")
     expected = "\x1b[92m────────────────\x1b[0m\n"
     expected += "\x1b[92m───── \x1b[0mfoo\x1b[92m ──────\x1b[0m\n"
-    expected += "\x1b[92m───── \x1b[0m\x1b[1mfoo\x1b[0m\x1b[92m ──────\x1b[0m\n"
+    expected += (
+        "\x1b[92m───── \x1b[0m\x1b[1mfoo\x1b[0m\x1b[92m ──────\x1b[0m\n"
+    )
     expected += "\x1b[92m─ \x1b[0mfoobarbazeg…\x1b[92m ─\x1b[0m\n"
 
     result = console.file.getvalue()
@@ -29,13 +31,17 @@ def test_rule():
 
 
 def test_rule_error():
-    console = Console(width=16, file=io.StringIO(), legacy_windows=False, _environ={})
+    console = Console(
+        width=16, file=io.StringIO(), legacy_windows=False, _environ={}
+    )
     with pytest.raises(ValueError):
         console.rule("foo", align="foo")
 
 
 def test_rule_align():
-    console = Console(width=16, file=io.StringIO(), legacy_windows=False, _environ={})
+    console = Console(
+        width=16, file=io.StringIO(), legacy_windows=False, _environ={}
+    )
     console.rule("foo")
     console.rule("foo", align="left")
     console.rule("foo", align="center")

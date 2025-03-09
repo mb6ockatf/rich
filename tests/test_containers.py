@@ -51,7 +51,11 @@ def test_lines_justify():
     assert lines2._lines == [
         Text(
             "foo bar",
-            spans=[Span(0, 3, "b"), Span(3, 4, Style.parse("bold")), Span(4, 7, "b")],
+            spans=[
+                Span(0, 3, "b"),
+                Span(3, 4, Style.parse("bold")),
+                Span(4, 7, "b"),
+            ],
         ),
         Text("test"),
     ]

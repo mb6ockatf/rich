@@ -9,7 +9,11 @@ from rich.style import Style
 
 if sys.platform == "win32":
     from rich import _win32_console
-    from rich._win32_console import COORD, LegacyWindowsTerm, WindowsCoordinates
+    from rich._win32_console import (
+        COORD,
+        LegacyWindowsTerm,
+        WindowsCoordinates,
+    )
 
     CURSOR_X = 1
     CURSOR_Y = 2
@@ -25,7 +29,9 @@ if sys.platform == "win32":
         dwSize: COORD = COORD(SCREEN_WIDTH, SCREEN_HEIGHT)
         wAttributes: int = DEFAULT_STYLE_ATTRIBUTE
 
-    pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="windows only")
+    pytestmark = pytest.mark.skipif(
+        sys.platform != "win32", reason="windows only"
+    )
 
     def test_windows_coordinates_to_ctype():
         coord = WindowsCoordinates.from_param(WindowsCoordinates(row=1, col=2))
@@ -35,7 +41,9 @@ if sys.platform == "win32":
     @pytest.fixture
     def win32_handle():
         handle = mock.sentinel
-        with mock.patch.object(_win32_console, "GetStdHandle", return_value=handle):
+        with mock.patch.object(
+            _win32_console, "GetStdHandle", return_value=handle
+        ):
             yield handle
 
     @pytest.fixture
@@ -49,7 +57,9 @@ if sys.platform == "win32":
             "GetConsoleScreenBufferInfo",
             return_value=StubScreenBufferInfo,
         ) as GetConsoleScreenBufferInfo, mock.patch.object(
-            _win32_console, "GetConsoleCursorInfo", side_effect=stub_console_cursor_info
+            _win32_console,
+            "GetConsoleCursorInfo",
+            side_effect=stub_console_cursor_info,
         ) as GetConsoleCursorInfo:
             yield {
                 "GetConsoleScreenBufferInfo": GetConsoleScreenBufferInfo,
@@ -58,7 +68,9 @@ if sys.platform == "win32":
 
     def test_cursor_position(win32_console_getters):
         term = LegacyWindowsTerm(sys.stdout)
-        assert term.cursor_position == WindowsCoordinates(row=CURSOR_Y, col=CURSOR_X)
+        assert term.cursor_position == WindowsCoordinates(
+            row=CURSOR_Y, col=CURSOR_X
+        )
 
     def test_screen_size(win32_console_getters):
         term = LegacyWindowsTerm(sys.stdout)
@@ -166,7 +178,9 @@ if sys.platform == "win32":
         call_args = SetConsoleTextAttribute.call_args_list
         first_args, first_kwargs = call_args[0]
 
-        expected_attr = 16 | term._default_fore  # 16 for blue bg, plus default fg color
+        expected_attr = (
+            16 | term._default_fore
+        )  # 16 for blue bg, plus default fg color
         assert first_args == (win32_handle,)
         assert first_kwargs["attributes"].value == expected_attr
 
@@ -189,8 +203,12 @@ if sys.platform == "win32":
         assert first_args == (win32_handle,)
         assert first_kwargs["attributes"].value == expected_attr
 
-    @patch.object(_win32_console, "FillConsoleOutputCharacter", return_value=None)
-    @patch.object(_win32_console, "FillConsoleOutputAttribute", return_value=None)
+    @patch.object(
+        _win32_console, "FillConsoleOutputCharacter", return_value=None
+    )
+    @patch.object(
+        _win32_console, "FillConsoleOutputAttribute", return_value=None
+    )
     def test_erase_line(
         FillConsoleOutputAttribute,
         FillConsoleOutputCharacter,
@@ -204,11 +222,18 @@ if sys.platform == "win32":
             win32_handle, " ", length=SCREEN_WIDTH, start=start
         )
         FillConsoleOutputAttribute.assert_called_once_with(
-            win32_handle, DEFAULT_STYLE_ATTRIBUTE, length=SCREEN_WIDTH, start=start
+            win32_handle,
+            DEFAULT_STYLE_ATTRIBUTE,
+            length=SCREEN_WIDTH,
+            start=start,
         )
 
-    @patch.object(_win32_console, "FillConsoleOutputCharacter", return_value=None)
-    @patch.object(_win32_console, "FillConsoleOutputAttribute", return_value=None)
+    @patch.object(
+        _win32_console, "FillConsoleOutputCharacter", return_value=None
+    )
+    @patch.object(
+        _win32_console, "FillConsoleOutputAttribute", return_value=None
+    )
     def test_erase_end_of_line(
         FillConsoleOutputAttribute,
         FillConsoleOutputCharacter,
@@ -219,7 +244,10 @@ if sys.platform == "win32":
         term.erase_end_of_line()
 
         FillConsoleOutputCharacter.assert_called_once_with(
-            win32_handle, " ", length=SCREEN_WIDTH - CURSOR_X, start=CURSOR_POSITION
+            win32_handle,
+            " ",
+            length=SCREEN_WIDTH - CURSOR_X,
+            start=CURSOR_POSITION,
         )
         FillConsoleOutputAttribute.assert_called_once_with(
             win32_handle,
@@ -228,8 +256,12 @@ if sys.platform == "win32":
             start=CURSOR_POSITION,
         )
 
-    @patch.object(_win32_console, "FillConsoleOutputCharacter", return_value=None)
-    @patch.object(_win32_console, "FillConsoleOutputAttribute", return_value=None)
+    @patch.object(
+        _win32_console, "FillConsoleOutputCharacter", return_value=None
+    )
+    @patch.object(
+        _win32_console, "FillConsoleOutputAttribute", return_value=None
+    )
     def test_erase_start_of_line(
         FillConsoleOutputAttribute,
         FillConsoleOutputCharacter,
@@ -248,7 +280,9 @@ if sys.platform == "win32":
             win32_handle, DEFAULT_STYLE_ATTRIBUTE, length=CURSOR_X, start=start
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_to(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -257,9 +291,13 @@ if sys.platform == "win32":
 
         term.move_cursor_to(coords)
 
-        SetConsoleCursorPosition.assert_called_once_with(win32_handle, coords=coords)
+        SetConsoleCursorPosition.assert_called_once_with(
+            win32_handle, coords=coords
+        )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_to_out_of_bounds_row(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -270,7 +308,9 @@ if sys.platform == "win32":
 
         assert not SetConsoleCursorPosition.called
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_to_out_of_bounds_col(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -281,7 +321,9 @@ if sys.platform == "win32":
 
         assert not SetConsoleCursorPosition.called
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_up(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -290,10 +332,13 @@ if sys.platform == "win32":
         term.move_cursor_up()
 
         SetConsoleCursorPosition.assert_called_once_with(
-            win32_handle, coords=WindowsCoordinates(row=CURSOR_Y - 1, col=CURSOR_X)
+            win32_handle,
+            coords=WindowsCoordinates(row=CURSOR_Y - 1, col=CURSOR_X),
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_down(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -302,10 +347,13 @@ if sys.platform == "win32":
         term.move_cursor_down()
 
         SetConsoleCursorPosition.assert_called_once_with(
-            win32_handle, coords=WindowsCoordinates(row=CURSOR_Y + 1, col=CURSOR_X)
+            win32_handle,
+            coords=WindowsCoordinates(row=CURSOR_Y + 1, col=CURSOR_X),
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_forward(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -314,19 +362,22 @@ if sys.platform == "win32":
         term.move_cursor_forward()
 
         SetConsoleCursorPosition.assert_called_once_with(
-            win32_handle, coords=WindowsCoordinates(row=CURSOR_Y, col=CURSOR_X + 1)
+            win32_handle,
+            coords=WindowsCoordinates(row=CURSOR_Y, col=CURSOR_X + 1),
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_forward_newline_wrap(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
         cursor_at_end_of_line = StubScreenBufferInfo(
             dwCursorPosition=COORD(SCREEN_WIDTH - 1, CURSOR_Y)
         )
-        win32_console_getters[
-            "GetConsoleScreenBufferInfo"
-        ].return_value = cursor_at_end_of_line
+        win32_console_getters["GetConsoleScreenBufferInfo"].return_value = (
+            cursor_at_end_of_line
+        )
         term = LegacyWindowsTerm(sys.stdout)
         term.move_cursor_forward()
 
@@ -334,7 +385,9 @@ if sys.platform == "win32":
             win32_handle, coords=WindowsCoordinates(row=CURSOR_Y + 1, col=0)
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_to_column(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
@@ -344,26 +397,31 @@ if sys.platform == "win32":
             win32_handle, coords=WindowsCoordinates(CURSOR_Y, 5)
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_backward(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
         term = LegacyWindowsTerm(sys.stdout)
         term.move_cursor_backward()
         SetConsoleCursorPosition.assert_called_once_with(
-            win32_handle, coords=WindowsCoordinates(row=CURSOR_Y, col=CURSOR_X - 1)
+            win32_handle,
+            coords=WindowsCoordinates(row=CURSOR_Y, col=CURSOR_X - 1),
         )
 
-    @patch.object(_win32_console, "SetConsoleCursorPosition", return_value=None)
+    @patch.object(
+        _win32_console, "SetConsoleCursorPosition", return_value=None
+    )
     def test_move_cursor_backward_prev_line_wrap(
         SetConsoleCursorPosition, win32_console_getters, win32_handle
     ):
         cursor_at_start_of_line = StubScreenBufferInfo(
             dwCursorPosition=COORD(0, CURSOR_Y)
         )
-        win32_console_getters[
-            "GetConsoleScreenBufferInfo"
-        ].return_value = cursor_at_start_of_line
+        win32_console_getters["GetConsoleScreenBufferInfo"].return_value = (
+            cursor_at_start_of_line
+        )
         term = LegacyWindowsTerm(sys.stdout)
         term.move_cursor_backward()
         SetConsoleCursorPosition.assert_called_once_with(
@@ -372,7 +430,9 @@ if sys.platform == "win32":
         )
 
     @patch.object(_win32_console, "SetConsoleCursorInfo", return_value=None)
-    def test_hide_cursor(SetConsoleCursorInfo, win32_console_getters, win32_handle):
+    def test_hide_cursor(
+        SetConsoleCursorInfo, win32_console_getters, win32_handle
+    ):
         term = LegacyWindowsTerm(sys.stdout)
         term.hide_cursor()
 
@@ -385,7 +445,9 @@ if sys.platform == "win32":
         assert kwargs["cursor_info"].dwSize == CURSOR_SIZE
 
     @patch.object(_win32_console, "SetConsoleCursorInfo", return_value=None)
-    def test_show_cursor(SetConsoleCursorInfo, win32_console_getters, win32_handle):
+    def test_show_cursor(
+        SetConsoleCursorInfo, win32_console_getters, win32_handle
+    ):
         term = LegacyWindowsTerm(sys.stdout)
         term.show_cursor()
 

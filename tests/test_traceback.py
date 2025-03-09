@@ -49,7 +49,10 @@ def test_handler():
                         frame_start_index - len(preamble) - 1,
                         frame_start_index - 1,
                     )
-                    if rendered_exception[preamble_start:preamble_end] == preamble:
+                    if (
+                        rendered_exception[preamble_start:preamble_end]
+                        == preamble
+                    ):
                         break
                 else:
                     pytest.fail(
@@ -159,7 +162,9 @@ def test_nested_exception():
         assert msg in exception_text
 
     # ZeroDivisionError should come before ValueError
-    assert exception_text.find("ZeroDivisionError") < exception_text.find("ValueError")
+    assert exception_text.find("ZeroDivisionError") < exception_text.find(
+        "ValueError"
+    )
 
 
 def test_caused_exception():
@@ -186,7 +191,9 @@ def test_caused_exception():
         assert msg in exception_text
 
     # ZeroDivisionError should come before ValueError
-    assert exception_text.find("ZeroDivisionError") < exception_text.find("ValueError")
+    assert exception_text.find("ZeroDivisionError") < exception_text.find(
+        "ValueError"
+    )
 
 
 def test_filename_with_bracket():
@@ -209,7 +216,9 @@ def test_filename_not_a_file():
     assert "string" in exception_text
 
 
-@pytest.mark.skipif(sys.platform == "win32", reason="renders different on windows")
+@pytest.mark.skipif(
+    sys.platform == "win32", reason="renders different on windows"
+)
 def test_traceback_console_theme_applies():
     """
     Ensure that themes supplied via Console init work on Tracebacks.
@@ -262,7 +271,10 @@ foobar:
     something: {{ raiser() }}
     else: {{ 5 + 5 }}
     """
-    assert Traceback._guess_lexer("test.yaml.j2", code) in ("text", "YAML+Jinja")
+    assert Traceback._guess_lexer("test.yaml.j2", code) in (
+        "text",
+        "YAML+Jinja",
+    )
 
 
 def test_recursive():
@@ -338,7 +350,9 @@ def test_traceback_finely_grained_missing() -> None:
         1 / 0
     except:
         traceback = Traceback()
-        last_instruction = traceback.trace.stacks[-1].frames[-1].last_instruction
+        last_instruction = (
+            traceback.trace.stacks[-1].frames[-1].last_instruction
+        )
         assert last_instruction is None
 
 
@@ -351,7 +365,9 @@ def test_traceback_finely_grained() -> None:
         1 / 0
     except:
         traceback = Traceback()
-        last_instruction = traceback.trace.stacks[-1].frames[-1].last_instruction
+        last_instruction = (
+            traceback.trace.stacks[-1].frames[-1].last_instruction
+        )
         assert last_instruction is not None
         assert isinstance(last_instruction, tuple)
         assert len(last_instruction) == 2

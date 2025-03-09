@@ -1,4 +1,5 @@
 """Lite simulation of the top linux command."""
+
 import datetime
 import random
 import sys
@@ -59,7 +60,14 @@ def create_process_table(height: int) -> Table:
         reverse=True,
     )
     table = Table(
-        "PID", "Command", "CPU %", "Memory", "Time", "Thread #", "State", box=box.SIMPLE
+        "PID",
+        "Command",
+        "CPU %",
+        "Memory",
+        "Time",
+        "Thread #",
+        "State",
+        box=box.SIMPLE,
     )
 
     for process in processes:
@@ -80,5 +88,7 @@ console = Console()
 
 with Live(console=console, screen=True, auto_refresh=False) as live:
     while True:
-        live.update(create_process_table(console.size.height - 4), refresh=True)
+        live.update(
+            create_process_table(console.size.height - 4), refresh=True
+        )
         time.sleep(1)

@@ -5,6 +5,7 @@ python print_calendar.py [YEAR]
 Example:
 python print_calendar.py 2021
 """
+
 import argparse
 import calendar
 from datetime import datetime

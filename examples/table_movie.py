@@ -1,4 +1,5 @@
 """Same as the table_movie.py but uses Live to update"""
+
 import time
 from contextlib import contextmanager
 
@@ -70,12 +71,16 @@ table_centered = Align.center(table)
 
 console.clear()
 
-with Live(table_centered, console=console, screen=False, refresh_per_second=20):
+with Live(
+    table_centered, console=console, screen=False, refresh_per_second=20
+):
     with beat(10):
         table.add_column("Release Date", no_wrap=True)
 
     with beat(10):
-        table.add_column("Title", Text.from_markup("[b]Total", justify="right"))
+        table.add_column(
+            "Title", Text.from_markup("[b]Total", justify="right")
+        )
 
     with beat(10):
         table.add_column("Budget", "[u]$412,000,000", no_wrap=True)
@@ -90,9 +95,7 @@ with Live(table_centered, console=console, screen=False, refresh_per_second=20):
         table.title = "Star Wars Box Office"
 
     with beat(10):
-        table.title = (
-            "[not italic]:popcorn:[/] Star Wars Box Office [not italic]:popcorn:[/]"
-        )
+        table.title = "[not italic]:popcorn:[/] Star Wars Box Office [not italic]:popcorn:[/]"
 
     with beat(10):
         table.caption = "Made with Rich"

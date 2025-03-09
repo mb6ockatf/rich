@@ -10,13 +10,19 @@ def test_control():
 def test_strip_control_codes():
     assert strip_control_codes("") == ""
     assert strip_control_codes("foo\rbar") == "foobar"
-    assert strip_control_codes("Fear is the mind killer") == "Fear is the mind killer"
+    assert (
+        strip_control_codes("Fear is the mind killer")
+        == "Fear is the mind killer"
+    )
 
 
 def test_escape_control_codes():
     assert escape_control_codes("") == ""
     assert escape_control_codes("foo\rbar") == "foo\\rbar"
-    assert escape_control_codes("Fear is the mind killer") == "Fear is the mind killer"
+    assert (
+        escape_control_codes("Fear is the mind killer")
+        == "Fear is the mind killer"
+    )
 
 
 def test_control_move_to():
@@ -43,7 +49,10 @@ def test_move_to_column():
     assert Control.move_to_column(10, 20).segment == Segment(
         "\x1b[11G\x1b[20B",
         None,
-        [(ControlType.CURSOR_MOVE_TO_COLUMN, 10), (ControlType.CURSOR_DOWN, 20)],
+        [
+            (ControlType.CURSOR_MOVE_TO_COLUMN, 10),
+            (ControlType.CURSOR_DOWN, 20),
+        ],
     )
 
     assert Control.move_to_column(10, -20).segment == Segment(

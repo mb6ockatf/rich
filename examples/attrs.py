@@ -47,7 +47,9 @@ if __name__ == "__main__":
 
     console = Console()
 
-    table = Table("attrs *with* Rich", Column(Text.from_markup("attrs *without* Rich")))
+    table = Table(
+        "attrs *with* Rich", Column(Text.from_markup("attrs *without* Rich"))
+    )
 
     table.add_row(Pretty(model), repr(model))
     console.print(table)

@@ -120,7 +120,9 @@ def test_rich_repr_auto() -> None:
     stupid_class = StupidClass(9)
     not_stupid = NotStupid()
     assert (
-        repr(Bird("penguin", ["fish"], another=stupid_class, extinct=not_stupid))
+        repr(
+            Bird("penguin", ["fish"], another=stupid_class, extinct=not_stupid)
+        )
         == f"Bird('penguin', ['fish'], another={repr(stupid_class)}, extinct={repr(not_stupid)})"
     )
 

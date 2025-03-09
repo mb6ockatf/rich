@@ -21,7 +21,9 @@ def test_no_renderable():
 
 def test_measure_renderables():
     console = Console()
-    assert measure_renderables(console, console.options, "") == Measurement(0, 0)
+    assert measure_renderables(console, console.options, "") == Measurement(
+        0, 0
+    )
     assert measure_renderables(
         console, console.options.update_width(0), "hello"
     ) == Measurement(0, 0)

@@ -35,13 +35,17 @@ class TextSuite:
         Text(snippets.LOREM_IPSUM).divide(range(20, 100, 4))
 
     def time_align_center(self):
-        Text(snippets.LOREM_IPSUM).align("center", width=self.len_lorem_ipsum * 3)
+        Text(snippets.LOREM_IPSUM).align(
+            "center", width=self.len_lorem_ipsum * 3
+        )
 
     def time_render(self):
         list(self.text.render(self.console))
 
     def time_wrapping_unicode_heavy(self):
-        Text(snippets.UNICODE_HEAVY_TEXT).wrap(self.console, 12, overflow="fold")
+        Text(snippets.UNICODE_HEAVY_TEXT).wrap(
+            self.console, 12, overflow="fold"
+        )
 
     def time_fit_unicode_heavy(self):
         Text(snippets.UNICODE_HEAVY_TEXT).fit(12)
@@ -69,7 +73,9 @@ class TextHotCacheSuite:
 
     def time_wrapping_unicode_heavy_warm_cache(self):
         for _ in range(20):
-            Text(snippets.UNICODE_HEAVY_TEXT).wrap(self.console, 12, overflow="fold")
+            Text(snippets.UNICODE_HEAVY_TEXT).wrap(
+                self.console, 12, overflow="fold"
+            )
 
 
 class SyntaxWrappingSuite:
@@ -104,16 +110,25 @@ class TableSuite:
     def _print_table(self, width):
         table = Table(title="Star Wars Movies")
         console = Console(
-            file=StringIO(), color_system="truecolor", legacy_windows=False, width=width
+            file=StringIO(),
+            color_system="truecolor",
+            legacy_windows=False,
+            width=width,
         )
-        table.add_column("Released", justify="right", style="cyan", no_wrap=True)
+        table.add_column(
+            "Released", justify="right", style="cyan", no_wrap=True
+        )
         table.add_column("Title", style="magenta")
         table.add_column("Box Office", justify="right", style="green")
         table.add_row(
-            "Dec 20, 2019", "[b]Star Wars[/]: The Rise of Skywalker", "$952,110,690"
+            "Dec 20, 2019",
+            "[b]Star Wars[/]: The Rise of Skywalker",
+            "$952,110,690",
         )
         table.add_row(
-            "May 25, 2018", "Solo: A [red][b]Star Wars[/] Story[/]", "$393,151,347"
+            "May 25, 2018",
+            "Solo: A [red][b]Star Wars[/] Story[/]",
+            "$393,151,347",
         )
         table.add_row(
             "Dec 15, 2017",
@@ -121,7 +136,9 @@ class TableSuite:
             "$1,332,539,889",
         )
         table.add_row(
-            "Dec 16, 2016", "Rogue One: A [blue]Star Wars[/] Story", "$1,332,439,889"
+            "Dec 16, 2016",
+            "Rogue One: A [blue]Star Wars[/] Story",
+            "$1,332,439,889",
         )
         console.print(table)
 
@@ -129,7 +146,10 @@ class TableSuite:
 class PrettySuite:
     def setup(self):
         self.console = Console(
-            file=StringIO(), color_system="truecolor", legacy_windows=False, width=100
+            file=StringIO(),
+            color_system="truecolor",
+            legacy_windows=False,
+            width=100,
         )
 
     def time_pretty(self):
@@ -148,7 +168,10 @@ class PrettySuite:
 class StyleSuite:
     def setup(self):
         self.console = Console(
-            file=StringIO(), color_system="truecolor", legacy_windows=False, width=100
+            file=StringIO(),
+            color_system="truecolor",
+            legacy_windows=False,
+            width=100,
         )
         self.style1 = Style.parse("blue on red")
         self.style2 = Style.parse("green italic bold")
@@ -169,7 +192,10 @@ class StyleSuite:
 class ColorSuite:
     def setup(self):
         self.console = Console(
-            file=StringIO(), color_system="truecolor", legacy_windows=False, width=100
+            file=StringIO(),
+            color_system="truecolor",
+            legacy_windows=False,
+            width=100,
         )
         self.color = Color.parse("#0d1da0")
 
@@ -186,7 +212,10 @@ class ColorSuite:
 class ColorSuiteCached:
     def setup(self):
         self.console = Console(
-            file=StringIO(), color_system="truecolor", legacy_windows=False, width=100
+            file=StringIO(),
+            color_system="truecolor",
+            legacy_windows=False,
+            width=100,
         )
         self.color = Color.parse("#0d1da0")
         # Warm cache
